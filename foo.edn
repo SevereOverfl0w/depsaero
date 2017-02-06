@@ -1,0 +1,12 @@
+{
+ :a "b"
+ :b #join ["a" #ref [:a] "c"]
+ :c #ref [:b]
+ :c1 #ref [:a]
+ :d {:the-key #ref [:b]
+     :list [42 #ref [:a] #int "44"]}
+ :e #join [#ref [:d :the-key] "- this is awesome"]
+
+ :g {:a {"abc" {:c :value-for-f-plz}}}
+ :f #ref [:g :a #ref [:b] :c]
+}
