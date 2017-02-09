@@ -49,6 +49,18 @@
   [config tag value]
   (Integer/parseInt value))
 
+(defmethod resolve-tag :default
+  [config tag value]
+  (cond
+    (contains? *data-readers* tag)
+    ((get *data-readers* tag) value)
+    (contains? default-data-readers tag)
+    ((get default-data-readers tag) value)
+    ;; TODO: Call *default-data-reader-fn* or throw a RuntimeException if it is
+    ;; nil
+    :else
+    (throw (ex-info "Unable to resolve tag" {:tag tag :value value}))))
+
 (defn resolve-tags
   "Resolve tags in a data structure, doesn't take notice of any ordering guarantees, this function should be called _after_ reoslving anything ordered, to fix up anything you didn't handle"
   [config]
