@@ -10,4 +10,7 @@
  :g {:a {"abc" {:c :value-for-f-plz}}}
  :f #ref [:g :a #ref [:b] :c]
  :z #inst "2017-02-09T20:13:48.024-00:00"
+
+ :profile #profile {:dev :DEV
+                    :prod :PROD}
  }

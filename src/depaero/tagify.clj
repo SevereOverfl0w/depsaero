@@ -70,3 +70,16 @@
         (resolve-tag config (:tag x) (:value x))
         x))
     config))
+
+(defn tag-wrapper->literal
+  [tag-wrapper]
+  (symbol (str "#" (:tag tag-wrapper) " " (pr-str (:value tag-wrapper)))))
+
+(defn tag-wrapped-config->edn
+  [tag-wrapped-config]
+  (walk/postwalk
+    (fn [x]
+      (if (tag-wrapper? x)
+        (tag-wrapper->literal x)
+        x))
+    tag-wrapped-config))
